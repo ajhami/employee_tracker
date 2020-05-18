@@ -1,9 +1,47 @@
 //var connection = require("./public/js/connect_sql");
 var accessSQL = require("./public/js/use_sql");
+const ask = require("./public/js/inquirer_prompts");
 
-accessSQL.testFunction("hello");
-accessSQL.printTable();
+async function init() {
+    console.log(`
+    ________________________________________________________
+    | _____                                                 |
+    | |                                                     |
+    | |__             ____  |  ____        ___  ___         |
+    | |      /\\  /\\  |    | | |    | \\  / |___||___|        |
+    | |____ /  \\/  \\ |____| | |____|  \\/  |___ |___         |
+    | ____________   |                /                     |
+    |      |         |               /                      |
+    |      |                                                |
+    |      | |___  ____    ____ |_  ____   |___             |
+    |      | |   \\ |   |  |     |_> |___|  |   \\            |
+    |      | |     |___|_ |____ |\\  |___   |                |
+    |_______________________________________________________|
+    
+    `)
 
+    console.log("TESTING NEW EMPLOYEE PROMPTS");
+    var newEmployee = await ask.newEmployee();
+    console.log(newEmployee);
+    
+    accessSQL.testFunction("hello");
+    accessSQL.printTable();
+
+
+
+    // HOW FUNCTION SHOULD WORK!
+    // use inquirer function to see what user wants to do,
+    // use series of else ifs to filter to the proper prompt function
+    // promise uses then to invoke query function, query then recursively
+    // calls the init function to start over questioning
+    // If user selects exit, program will end
+
+    // Look up iife
+
+
+}
+
+init();
 // connection.connect(function (err) {
 //     if (err) throw err;
 //     console.log("connected as id " + connection.threadId);

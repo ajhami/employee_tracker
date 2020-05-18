@@ -1,3 +1,7 @@
+----------------
+-- schema.sql --
+----------------
+
 DROP DATABASE IF EXISTS employee_tracker;
 CREATE DATABASE employee_tracker;
 
@@ -5,8 +9,8 @@ USE employee_tracker;
 
 CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT,
-    first_name varchar(30),
-    last_name varchar(30),
+    first_name varchar(50),
+    last_name varchar(50),
     role_id INT,
     manager_id INT,
     PRIMARY KEY(id)
@@ -14,13 +18,13 @@ CREATE TABLE employee (
 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(30),
+    name VARCHAR(100),
     PRIMARY KEY(id)
 );
 
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(30),
+    title VARCHAR(100),
     salary DECIMAL(10, 2),
     department_id INT,
     PRIMARY KEY(id)
