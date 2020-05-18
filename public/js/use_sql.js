@@ -1,4 +1,5 @@
 var connection = require("./connect_sql");
+var cTable = require("console.table")
 
 printTable = function() {
     connection.connect(function (err) {
@@ -9,11 +10,10 @@ printTable = function() {
         // TESTING MYSQL DATABASE
         connection.query("SELECT * FROM employee", function (err, res) {
             if (err) throw err;
-        
-            // for (let song of res) {
-            //   console.log(song.id, " | ", song.title, " | ", song.artist, " | ", song.genre);
-            // }
-            console.log(res);
+
+            const fullTable = cTable.getTable(res);
+
+            console.log(fullTable);
         
             connection.end();
         });
