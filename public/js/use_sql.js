@@ -2,25 +2,59 @@ var connection = require("./connect_sql");
 var cTable = require("console.table");
 var ask = require("./inquirer_prompts");
 
-printTable = function() {
-    // connection.connect(function (err) {
-    //     if (err) throw err;
-    //     console.log("connected as id " + connection.threadId);
-        
-    
-        // TESTING MYSQL DATABASE
-        connection.query("SELECT * FROM employee", function (err, res) {
-            if (err) throw err;
+// printTable = function() {
+printTable = function(tableType) {
 
-            const fullTable = cTable.getTable(res);
-            console.log(fullTable);
+    var queryLine = "SELECT * FROM " + tableType;
+    // TESTING MYSQL DATABASE
+    connection.query(queryLine, function (err, res) {
+        if (err) throw err;
 
-            // connection.end();
-        });
-        
+        const viewTable = cTable.getTable(res);
+        console.log(viewTable);
         selectOptions();
-    //   });
+    });
+    
 }
+
+getSavedChoices = function(tableName, columnName) {
+    var queryLine = "SELECT " + columnName + "FROM " + tableName;
+    connection.query(queryLine, function (err, res) {
+        if (err) throw err;
+
+        const fullTable = cTable.getTable(res);
+        console.log(fullTable);
+        return res;
+        // selectOptions();
+    });
+};
+
+saveNewEntry = function(tableName, newEntryArray) {
+    console.log("Entered saveNewEntry function!");
+    var columnNames = [];
+    
+    if(tableName === "employee") {
+        columnNames = ["first_name", "last_name", "role_id", "manager_id"];
+    }
+    else if(tableName === "department") {
+        columnNames = "department_name"
+    }
+    else {
+        columnNames = ["title", "salary", "department_id"];
+    }
+    console.log("columnNames = ", columnNames);
+
+    var queryLine = "INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + newEntryArray + ")";
+    console.log("queryLine = ", queryLine);
+    connection.query(queryLine, function (err, res) {
+        if (err) throw err;
+        
+        console.log("New Employee saved!");
+
+        selectOptions();
+    })
+};
+
 
 testFunction = function(word) {
     console.log("THIS IS WORKING :)");

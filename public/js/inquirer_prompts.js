@@ -8,8 +8,8 @@ selectOptions = function() {
         message: "What would you like to do?",
         choices: [
             "View All Employees", 
-            "View Employees by Department",
-            "View Employees by Manager",
+            // "View Employees by Department",
+            // "View Employees by Manager",
             "Add Employee",
             "Remove Employee",
             "Update Employee Role",
@@ -17,27 +17,30 @@ selectOptions = function() {
             "View All Roles",
             "Add Role",
             "Remove Role",
-            "View All Managers",
-            "Add Manager",
-            "Remove Manager",
+            "View All Departments",
+            "Add Department",
+            "Remove Department",
+            // "View All Managers",
+            // "Add Manager",
+            // "Remove Manager",
             "Exit Program"
         ]
     }).then(function(selection) {
         switch (selection.action) {
             case "View All Employees":
-                accessSQL.printTable();
+                accessSQL.printTable("employee");
                 break;
       
-            case "View Employees by Department":
-              accessSQL.testFunction(selection.action);
-              break;
+            // case "View Employees by Department":
+            //   accessSQL.testFunction(selection.action);
+            //   break;
       
-            case "View Employees by Manager":
-                accessSQL.testFunction(selection.action);
-                break;
+            // case "View Employees by Manager":
+            //     accessSQL.testFunction(selection.action);
+            //     break;
       
             case "Add Employee":
-                accessSQL.testFunction(selection.action);
+                addNewEmployee();
                 break;
 
             case "Remove Employee":
@@ -53,28 +56,40 @@ selectOptions = function() {
                 break;
         
             case "View All Roles":
-                accessSQL.testFunction(selection.action);
+                accessSQL.printTable("role");
                 break;
 
             case "Add Role":
-                accessSQL.testFunction(selection.action);
+                addNewRole();
                 break;
 
             case "Remove Role":
                 accessSQL.testFunction(selection.action);
                 break;
 
-            case "View All Managers":
+            case "View All Departments":
+                accessSQL.printTable("department");
+                break;
+
+            case "Add Department":
+                addNewDepartment();
+                break;
+
+            case "Remove Department":
                 accessSQL.testFunction(selection.action);
                 break;
 
-            case "Add Manager":
-                accessSQL.testFunction(selection.action);
-                break;
+            // case "View All Managers":
+            //     accessSQL.testFunction(selection.action);
+            //     break;
 
-            case "Remove Manager":
-                accessSQL.testFunction(selection.action);
-                break;
+            // case "Add Manager":
+            //     accessSQL.testFunction(selection.action);
+            //     break;
+
+            // case "Remove Manager":
+            //     accessSQL.testFunction(selection.action);
+            //     break;
 
             case "Exit Program":
                 accessSQL.exitProgram();
@@ -83,11 +98,12 @@ selectOptions = function() {
     });
 }
 
-newEmployee = function() {
+
+addNewEmployee = function() {
 
     // WRITE QUERY FUNCTION IN HERE TO GRAB LIST OF STORED DEPARTMENTS AND ROLES
     
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type: "input",
             name: "firstName",
@@ -99,21 +115,55 @@ newEmployee = function() {
             message: "Enter employee's last name: "
         },
         {
-            type: "choice",
-            name: "department",
-            message: "Select the employee's department: ",
+            type: "list",
+            name: "roleID",
+            message: "Select the employee's role ID: ",
             choices: [1, 2, 3] // placeholder for queried departments
         },
         {
-            type: "choice",
-            name: "role",
-            message: "Select the employee's role: ",
+            type: "list",
+            name: "managerID",
+            message: "Select the employee's manager ID: ",
             choices: [1, 2, 3] // placeholder for queried roles
         }    
-    ])
+    ]).then(function(newEmployee) {
+        return saveNewEntry("employee", [JSON.stringify(newEmployee.firstName), JSON.stringify(newEmployee.lastName), newEmployee.roleID, newEmployee.managerID]);
+    })
 };
 
 
+addNewDepartment = function() {
+    inquirer.prompt({
+        type: "input",
+        name: "name",
+        message: "Enter the name of the new department: "
+    }).then(function(newDeparment){
+        return saveNewEntry("department", JSON.stringify(newDeparment.name));
+    })
+};
+
+
+addNewRole = function() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "Enter the title for the new role: "
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Enter the set salary: "
+        },
+        {
+            type: "input",
+            name: "departmentID",
+            message: "Enter the department ID: "
+        }
+    ]).then(function(newRole){
+        return saveNewEntry("role", [JSON.stringify(newRole.title), JSON.stringify(newRole.salary), newRole.departmentID]);
+    })
+};
 
 
 
@@ -121,5 +171,5 @@ newEmployee = function() {
 
 module.exports = {
     selectOptions: selectOptions,
-    newEmployee: newEmployee
+    addNewEmployee: addNewEmployee
 }

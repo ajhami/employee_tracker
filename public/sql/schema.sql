@@ -18,7 +18,7 @@ CREATE TABLE employee (
 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100),
+    department_name VARCHAR(100),
     PRIMARY KEY(id)
 );
 
