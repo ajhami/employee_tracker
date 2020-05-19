@@ -1,4 +1,4 @@
-//var connection = require("./public/js/connect_sql");
+// var connection = require("./public/js/connect_sql");
 // var accessSQL = require("./public/js/use_sql");
 const ask = require("./public/js/inquirer_prompts");
 
@@ -27,8 +27,15 @@ const ask = require("./public/js/inquirer_prompts");
     
     // accessSQL.testFunction("hello");
     // accessSQL.printTable();
-
+    
     ask.selectOptions();
+    
+    // var testDepartments = getSavedChoices("department_name", "department");
+    // var testRoles = getSavedChoices("title", "role");
+
+    // console.log(testDepartments);
+    // console.log(testRoles);
+
 
 
     // HOW FUNCTION SHOULD WORK!

@@ -17,15 +17,15 @@ printTable = function(tableType) {
     
 }
 
-getSavedChoices = function(tableName, columnName) {
-    var queryLine = "SELECT " + columnName + "FROM " + tableName;
+getSavedChoices = function(columnName, tableName) {
+    var queryLine = "SELECT " + columnName + " FROM " + tableName;
     connection.query(queryLine, function (err, res) {
         if (err) throw err;
 
-        const fullTable = cTable.getTable(res);
-        console.log(fullTable);
+        // const fullTable = cTable.getTable(res);
+        // console.log(fullTable);
         return res;
-        // selectOptions();
+        
     });
 };
 
@@ -55,6 +55,17 @@ saveNewEntry = function(tableName, newEntryArray) {
     })
 };
 
+deleteEntry = function(tableName, selectedEntry) {
+    var queryLine = "DELETE FROM " + tableName + " WHERE id = " + selectedEntry;
+    console.log("queryLine = ", queryLine);
+    connection.query(queryLine, function (err, res) {
+        if (err) throw err;
+        
+        console.log("Entry Deleted!");
+
+        selectOptions();
+    })
+};
 
 testFunction = function(word) {
     console.log("THIS IS WORKING :)");

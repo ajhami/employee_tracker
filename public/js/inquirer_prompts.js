@@ -44,7 +44,7 @@ selectOptions = function() {
                 break;
 
             case "Remove Employee":
-                accessSQL.testFunction(selection.action);
+                selectEntryToDelete("employee");
                 break;
             
             case "Update Employee Role":
@@ -64,7 +64,7 @@ selectOptions = function() {
                 break;
 
             case "Remove Role":
-                accessSQL.testFunction(selection.action);
+                selectEntryToDelete("role");
                 break;
 
             case "View All Departments":
@@ -76,7 +76,7 @@ selectOptions = function() {
                 break;
 
             case "Remove Department":
-                accessSQL.testFunction(selection.action);
+                selectEntryToDelete("department");
                 break;
 
             // case "View All Managers":
@@ -165,6 +165,15 @@ addNewRole = function() {
     })
 };
 
+selectEntryToDelete = function(type) {
+    inquirer.prompt({
+        type: "input",
+        name: "id",
+        message: `Enter the ID of the ${type} you'd like to delete: `
+    }).then(function(entrySelected){
+        return deleteEntry(type, entrySelected.id);
+    })
+};
 
 
 
