@@ -1,32 +1,34 @@
 //var connection = require("./public/js/connect_sql");
-var accessSQL = require("./public/js/use_sql");
+// var accessSQL = require("./public/js/use_sql");
 const ask = require("./public/js/inquirer_prompts");
 
-async function init() {
+//async function init() {
     console.log(`
-    ________________________________________________________
-    | _____                                                 |
-    | |                                                     |
-    | |__             ____  |  ____        ___  ___         |
-    | |      /\\  /\\  |    | | |    | \\  / |___||___|        |
-    | |____ /  \\/  \\ |____| | |____|  \\/  |___ |___         |
-    | ____________   |                /                     |
-    |      |         |               /                      |
-    |      |                                                |
-    |      | |___  ____    ____ |_  ____   |___             |
-    |      | |   \\ |   |  |     |_> |___|  |   \\            |
-    |      | |     |___|_ |____ |\\  |___   |                |
-    |_______________________________________________________|
+    ______________________________________________________
+    | _____                                              |
+    | |                                                  |
+    | |__             ____  |  ____        ___  ___      |
+    | |      /\\  /\\  |    | | |    | \\  / |___||___|     |
+    | |____ /  \\/  \\ |____| | |____|  \\/  |___ |___      |
+    | ____________   |                /                  |
+    |      |         |               /                   |
+    |      |                                             |
+    |      | |___  ____    ____ |_  ____   |___          |
+    |      | |   \\ |   |  |     |_> |___|  |   \\         |
+    |      | |     |___|_ |____ |\\  |___   |             |
+    |____________________________________________________|
     
     `)
 
-    console.log("TESTING NEW EMPLOYEE PROMPTS");
-    var newEmployee = await ask.newEmployee();
-    console.log(newEmployee);
-    
-    accessSQL.testFunction("hello");
-    accessSQL.printTable();
 
+    // console.log("TESTING NEW EMPLOYEE PROMPTS");
+    // var newEmployee = await ask.newEmployee();
+    // console.log(newEmployee);
+    
+    // accessSQL.testFunction("hello");
+    // accessSQL.printTable();
+
+    ask.selectOptions();
 
 
     // HOW FUNCTION SHOULD WORK!
@@ -39,9 +41,9 @@ async function init() {
     // Look up iife
 
 
-}
+//}
 
-init();
+// init();
 // connection.connect(function (err) {
 //     if (err) throw err;
 //     console.log("connected as id " + connection.threadId);

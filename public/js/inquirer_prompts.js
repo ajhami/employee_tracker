@@ -1,9 +1,9 @@
+var accessSQL= require("./use_sql");
 var inquirer = require("inquirer");
 
-
 selectOptions = function() {
-    return inquirer.prompt({
-        type: "choice",
+    inquirer.prompt({
+        type: "rawlist",
         name: "action",
         message: "What would you like to do?",
         choices: [
@@ -22,6 +22,64 @@ selectOptions = function() {
             "Remove Manager",
             "Exit Program"
         ]
+    }).then(function(selection) {
+        switch (selection.action) {
+            case "View All Employees":
+                accessSQL.printTable();
+                break;
+      
+            case "View Employees by Department":
+              accessSQL.testFunction(selection.action);
+              break;
+      
+            case "View Employees by Manager":
+                accessSQL.testFunction(selection.action);
+                break;
+      
+            case "Add Employee":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "Remove Employee":
+                accessSQL.testFunction(selection.action);
+                break;
+            
+            case "Update Employee Role":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "Update Employee Manager":
+                accessSQL.testFunction(selection.action);
+                break;
+        
+            case "View All Roles":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "Add Role":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "Remove Role":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "View All Managers":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "Add Manager":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "Remove Manager":
+                accessSQL.testFunction(selection.action);
+                break;
+
+            case "Exit Program":
+                accessSQL.exitProgram();
+                break;
+        }
     });
 }
 
@@ -62,5 +120,6 @@ newEmployee = function() {
 
 
 module.exports = {
+    selectOptions: selectOptions,
     newEmployee: newEmployee
 }

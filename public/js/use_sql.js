@@ -1,10 +1,11 @@
 var connection = require("./connect_sql");
-var cTable = require("console.table")
+var cTable = require("console.table");
+var ask = require("./inquirer_prompts");
 
 printTable = function() {
-    connection.connect(function (err) {
-        if (err) throw err;
-        console.log("connected as id " + connection.threadId);
+    // connection.connect(function (err) {
+    //     if (err) throw err;
+    //     console.log("connected as id " + connection.threadId);
         
     
         // TESTING MYSQL DATABASE
@@ -12,23 +13,30 @@ printTable = function() {
             if (err) throw err;
 
             const fullTable = cTable.getTable(res);
-
             console.log(fullTable);
-        
-            connection.end();
+
+            // connection.end();
         });
-    
-      });
+        
+        selectOptions();
+    //   });
 }
 
 testFunction = function(word) {
     console.log("THIS IS WORKING :)");
-    console.log("var = ", word)
+    console.log("var = ", word);
+    selectOptions();
+}
+
+exitProgram = function() {
+    console.log("Goodbye!");
+    connection.end();
 }
 
 
 module.exports = {
     testFunction: testFunction,
-    printTable: printTable
+    printTable: printTable,
+    exitProgram: exitProgram
 
 };
