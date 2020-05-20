@@ -10,18 +10,23 @@ Employee Tracker is an interactive node.js application used to store important i
 - Installation
 - Usage
 
-### Installation (git)
+### Installation
+Run the following line in the git terminal:
+
 ```git
 npm install
 ```
+
+Installed packages included in this application are mySQL, inquirer, and console.table.
+
 ### Usage
-Run application in the node environment:
+Run application in the git terminal:
 
 ```git
 npm start
 ```
 
-"index.js" initializes the application with console log instructions to the user and calling the main inquirer function "selectOptions". "inquirer_prompts.js" contains all inquirer calls to the user and "use_sql.js" writes queries to the mySQL database.
+"index.js" initializes the application with console log instructions to the user and calling the main inquirer function "selectOptions()". "inquirer_prompts.js" contains all inquirer calls to the user and "use_sql.js" writes queries to the mySQL database.
 
 
 
