@@ -4,8 +4,31 @@ var ask = require("./inquirer_prompts");
 
 
 printTable = function(tableType) {
-
-    var queryLine = "SELECT * FROM " + tableType;
+    var queryLine = "";
+    
+    if(tableType === "completeTable") {
+        queryLine = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name, manager.manager_name " +
+                    "FROM employee " +
+                    "INNER JOIN role ON employee.role_id = role.id " +
+                    "INNER JOIN department ON role.department_id = department.id " +
+                    "INNER JOIN manager ON department.id = manager.department_id " +
+                    "ORDER BY employee.last_name ASC;"
+    }
+    else if(tableType === "sortByRole") {
+        queryLine = "SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, role.title, role.salary " +
+                    "FROM employee " +
+                    "INNER JOIN role ON employee.role_id = role.id " +
+                    "ORDER BY employee.role_id ASC;"
+    }
+    else if(tableType === "sortByManager") {
+        queryLine = "SELECT employee.id, employee.first_name, employee.last_name, employee.manager_id, manager.manager_name " +
+                    "FROM employee " +
+                    "INNER JOIN manager ON employee.manager_id = manager.id " +
+                    "ORDER BY employee.manager_id ASC;"
+    }
+    else {
+        queryLine = "SELECT * FROM " + tableType;
+    }
 
     connection.query(queryLine, function (err, res) {
         if (err) throw err;
@@ -39,8 +62,11 @@ saveNewEntry = function(tableName, newEntryArray) {
     else if(tableName === "department") {
         columnNames = "department_name"
     }
-    else {
+    else if(tableName === "role") {
         columnNames = ["title", "salary", "department_id"];
+    }
+    else {
+        columnNames = ["manager_name", "department_id"];
     }
     console.log("columnNames = ", columnNames);
 
@@ -108,6 +134,6 @@ module.exports = {
     exitProgram: exitProgram,
 
 
-    
+
 
 };

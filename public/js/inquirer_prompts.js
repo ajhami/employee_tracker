@@ -8,9 +8,10 @@ selectOptions = function() {
         name: "action",
         message: "What would you like to do?",
         choices: [
+            "View Complete Employee Information",
             "View All Employees", 
-            // "View Employees by Department",
-            // "View Employees by Manager",
+            "View Employees by Role",
+            "View Employees by Manager",
             "Add Employee",
             "Remove Employee",
             "Update Employee Role",
@@ -23,9 +24,10 @@ selectOptions = function() {
             "Add Department",
             "Update Department",
             "Remove Department",
-            // "View All Managers",
-            // "Add Manager",
-            // "Remove Manager",
+            "View All Managers",
+            "Add Manager",
+            "Update Manager",
+            "Remove Manager",
             "Exit Program"
         ]
 
@@ -33,17 +35,21 @@ selectOptions = function() {
 
         switch (selection.action) {
 
+            case "View Complete Employee Information":
+                accessSQL.printTable("completeTable");
+                break;
+
             case "View All Employees":
                 accessSQL.printTable("employee");
                 break;
       
-            // case "View Employees by Department":
-            //   accessSQL.testFunction(selection.action);
-            //   break;
+            case "View Employees by Role":
+              accessSQL.printTable("sortByRole")
+              break;
       
-            // case "View Employees by Manager":
-            //     accessSQL.testFunction(selection.action);
-            //     break;
+            case "View Employees by Manager":
+                accessSQL.printTable("sortByManager");
+                break;
       
             case "Add Employee":
                 addNewEmployee();
@@ -93,17 +99,21 @@ selectOptions = function() {
                 selectEntryToDelete("department");
                 break;
 
-            // case "View All Managers":
-            //     accessSQL.testFunction(selection.action);
-            //     break;
+            case "View All Managers":
+                accessSQL.printTable("manager");
+                break;
 
-            // case "Add Manager":
-            //     accessSQL.testFunction(selection.action);
-            //     break;
+            case "Add Manager":
+                addNewManager();
+                break;
 
-            // case "Remove Manager":
-            //     accessSQL.testFunction(selection.action);
-            //     break;
+            case "Update Manager":
+                updateManager();
+                break;
+
+            case "Remove Manager":
+                selectEntryToDelete("manager");
+                break;
 
             case "Exit Program":
                 accessSQL.exitProgram();
@@ -172,6 +182,23 @@ addNewRole = function() {
         }
     ]).then(function(newRole){
         return saveNewEntry("role", [JSON.stringify(newRole.title), JSON.stringify(newRole.salary), newRole.departmentID]);
+    })
+};
+
+addNewManager = function() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "managerName",
+            message: "Enter the full name of the new manager: "
+        },
+        {
+            type: "input",
+            name: "departmentID",
+            message: "Enter the department ID: "
+        }
+    ]).then(function(newManager){
+        return saveNewEntry("manager", [JSON.stringify(newManager.managerName), newManager.departmentID]);
     })
 };
 
@@ -256,10 +283,27 @@ updateDepartment = function() {
         {
             type: "input",
             name: "departmentName",
-            message: "Enter the Manager ID the employee should be switched to: "
+            message: "Enter the updated name of the department: "
         }
     ]).then(function(updatedDepartment) {
         return updateEntry("department", "department_name", JSON.stringify(updatedDepartment.departmentName), updatedDepartment.departmentID);
+    })
+};
+
+updateManager = function() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "managerID",
+            message: "Enter the ID number of the manager you'd like to update: "
+        },
+        {
+            type: "input",
+            name: "departmentID",
+            message: "Enter the Department ID the manager should be switched to: "
+        }
+    ]).then(function(updatedManager) {
+        return updateEntry("manager", "department_id", updatedManager.departmentID, updatedManager.managerID);
     })
 };
 
