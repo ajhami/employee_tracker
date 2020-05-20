@@ -2,11 +2,11 @@ var connection = require("./connect_sql");
 var cTable = require("console.table");
 var ask = require("./inquirer_prompts");
 
-// printTable = function() {
+
 printTable = function(tableType) {
 
     var queryLine = "SELECT * FROM " + tableType;
-    // TESTING MYSQL DATABASE
+
     connection.query(queryLine, function (err, res) {
         if (err) throw err;
 
@@ -67,6 +67,29 @@ deleteEntry = function(tableName, selectedEntry) {
     })
 };
 
+updateEntry = function(tableName, updatedColumn, updatedValue, selectedEntry) {
+    
+    var queryLine = "";
+    
+    // Updating an employee role specifically requires multiple value changes, requiring a more 
+    // specific query statement. The other possible updates only require one value to be changed.
+    if(tableName === "role") {
+        queryLine = "UPDATE role SET title = " + updatedValue[0] + ", salary = " + updatedValue[1] + ", department_id = " + updatedValue[2] + " WHERE id = " + selectedEntry;
+    }
+    else {
+        queryLine = "UPDATE " + tableName + " SET " + updatedColumn + " = " + updatedValue + " WHERE id = " + selectedEntry;
+    }
+
+    console.log("queryLine = ", queryLine);
+    connection.query(queryLine, function (err, res) {
+        if (err) throw err;
+        
+        console.log("Entry Updated!");
+
+        selectOptions();
+    })
+};
+
 testFunction = function(word) {
     console.log("THIS IS WORKING :)");
     console.log("var = ", word);
@@ -82,6 +105,9 @@ exitProgram = function() {
 module.exports = {
     testFunction: testFunction,
     printTable: printTable,
-    exitProgram: exitProgram
+    exitProgram: exitProgram,
+
+
+    
 
 };

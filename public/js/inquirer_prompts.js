@@ -2,6 +2,7 @@ var accessSQL= require("./use_sql");
 var inquirer = require("inquirer");
 
 selectOptions = function() {
+    
     inquirer.prompt({
         type: "rawlist",
         name: "action",
@@ -16,17 +17,22 @@ selectOptions = function() {
             "Update Employee Manager",
             "View All Roles",
             "Add Role",
+            "Update Role",
             "Remove Role",
             "View All Departments",
             "Add Department",
+            "Update Department",
             "Remove Department",
             // "View All Managers",
             // "Add Manager",
             // "Remove Manager",
             "Exit Program"
         ]
+
     }).then(function(selection) {
+
         switch (selection.action) {
+
             case "View All Employees":
                 accessSQL.printTable("employee");
                 break;
@@ -48,11 +54,11 @@ selectOptions = function() {
                 break;
             
             case "Update Employee Role":
-                accessSQL.testFunction(selection.action);
+                updateEmployeeRole();
                 break;
 
             case "Update Employee Manager":
-                accessSQL.testFunction(selection.action);
+                updateEmployeeManager();
                 break;
         
             case "View All Roles":
@@ -61,6 +67,10 @@ selectOptions = function() {
 
             case "Add Role":
                 addNewRole();
+                break;
+
+            case "Update Role":
+                updateRole();
                 break;
 
             case "Remove Role":
@@ -73,6 +83,10 @@ selectOptions = function() {
 
             case "Add Department":
                 addNewDepartment();
+                break;
+
+            case "Update Department":
+                updateDepartment();
                 break;
 
             case "Remove Department":
@@ -101,8 +115,6 @@ selectOptions = function() {
 
 addNewEmployee = function() {
 
-    // WRITE QUERY FUNCTION IN HERE TO GRAB LIST OF STORED DEPARTMENTS AND ROLES
-    
     inquirer.prompt([
         {
             type: "input",
@@ -115,16 +127,14 @@ addNewEmployee = function() {
             message: "Enter employee's last name: "
         },
         {
-            type: "list",
+            type: "input",
             name: "roleID",
-            message: "Select the employee's role ID: ",
-            choices: [1, 2, 3] // placeholder for queried departments
+            message: "Input the employee's role ID number: "
         },
         {
-            type: "list",
+            type: "input",
             name: "managerID",
-            message: "Select the employee's manager ID: ",
-            choices: [1, 2, 3] // placeholder for queried roles
+            message: "Input the employee's manager ID number: "
         }    
     ]).then(function(newEmployee) {
         return saveNewEntry("employee", [JSON.stringify(newEmployee.firstName), JSON.stringify(newEmployee.lastName), newEmployee.roleID, newEmployee.managerID]);
@@ -175,10 +185,85 @@ selectEntryToDelete = function(type) {
     })
 };
 
+updateEmployeeRole = function() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "employeeID",
+            message: "Enter the ID number of the employee you'd like to update: "
+        },
+        {
+            type: "input",
+            name: "roleID",
+            message: "Enter the Role ID the employee should be switched to: "
+        }
+    ]).then(function(updatedEmployee){
+        return updateEntry("employee", "role_id", updatedEmployee.roleID, updatedEmployee.employeeID);
+    })
+};
 
+updateEmployeeManager = function() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "employeeID",
+            message: "Enter the ID number of the employee you'd like to update: "
+        },
+        {
+            type: "input",
+            name: "managerID",
+            message: "Enter the Manager ID the employee should be switched to: "
+        }
+    ]).then(function(updatedEmployee){
+        return updateEntry("employee", "manager_id", updatedEmployee.managerID, updatedEmployee.employeeID);
+    })
+};
 
+updateRole = function() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "roleID",
+            message: "Enter the ID number of the role you'd like to update: "
+        },
+        {
+            type: "input",
+            name: "title",
+            message: "Enter the updated title for the role: "
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Enter the set salary: "
+        },
+        {
+            type: "input",
+            name: "departmentID",
+            message: "Enter the department ID: "
+        }
+    ]).then(function(updatedRole){
+        return updateEntry("role", "update_role", [JSON.stringify(updatedRole.title), updatedRole.salary, updatedRole.departmentID], updatedRole.roleID);
+    })
+};
+
+updateDepartment = function() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "departmentID",
+            message: "Enter the ID number of the department you'd like to update: "
+        },
+        {
+            type: "input",
+            name: "departmentName",
+            message: "Enter the Manager ID the employee should be switched to: "
+        }
+    ]).then(function(updatedDepartment) {
+        return updateEntry("department", "department_name", JSON.stringify(updatedDepartment.departmentName), updatedDepartment.departmentID);
+    })
+};
 
 module.exports = {
-    selectOptions: selectOptions,
-    addNewEmployee: addNewEmployee
+    // addNewEmployee: addNewEmployee,
+    selectOptions: selectOptions
 }
