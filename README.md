@@ -1,6 +1,6 @@
 # Employee Tracker
 
-![Project Status](https://img.shields.io/badge/status-in%20progress-yellow)
+![Project Status](https://img.shields.io/badge/status-ready-green)
 ![License](https://img.shields.io/badge/License-wtfpl-blue)
 
 ## Description
