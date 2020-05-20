@@ -2,7 +2,9 @@
 // var accessSQL = require("./public/js/use_sql");
 const ask = require("./public/js/inquirer_prompts");
 
-console.log(`
+console.log('\033[36m', "Welcome to...");
+
+console.log('\033[35m', `
     ______________________________________________________
     | _____                                              |
     | |                                                  |
@@ -12,15 +14,22 @@ console.log(`
     | ____________   |                /                  |
     |      |         |               /                   |
     |      |                                             |
-    |      | |___  ____    ____ |_  ____   |___          |
-    |      | |   \\ |   |  |     |_> |___|  |   \\         |
-    |      | |     |___|_ |____ |\\  |___   |             |
+    |      | |___  ____    ____ |__  ____   |___         |
+    |      | |   \\ |   |  |     |__> |___|  |   \\        |
+    |      | |     |___|_ |____ | \\_ |___   |            |
     |____________________________________________________|
     
 `)
 
+console.log('\033[36m', `
+        This application has been designed to manage
+    information on your company organization and personel.
+    Please note when wanting to update information on 
+    employees, departments, roles, or managers, make sure
+    to keep track of ID numbers. These IDs can be viewed
+    under any of the "view" options.
 
-// ADD MORE CONSOLE LOGS AND COMMENTS!!
+`);
 
 ask.selectOptions();
     
