@@ -6,7 +6,7 @@
 ## Description
 Employee Tracker is an interactive node.js application used to store important information for a company, such as employee information, role descriptions and department organization. This project is specifically designed to utilize a mySQL database and query the data through the terminal.
 
-![Application Screenshot](https://github.com/ajami/employee_tracker/blob/master/public/images/application_screenshot.PNG)
+![Application Screenshot](public/images/application_screenshot.PNG)
 
 ## Table of Contents
 - Installation
