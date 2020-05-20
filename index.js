@@ -1,9 +1,15 @@
-// var connection = require("./public/js/connect_sql");
-// var accessSQL = require("./public/js/use_sql");
+// ===============================================================================
+// INDEX.JS
+// ===============================================================================
+
+
+// The following require clause connects to all stored
+// functions in inquirer_prompts.js and use_sql.js and
+// connects to the mySQL database in connect_sql.js
 const ask = require("./public/js/inquirer_prompts");
 
+// 
 console.log('\033[36m', "Welcome to...");
-
 console.log('\033[35m', `
     ______________________________________________________
     | _____                                              |
@@ -31,5 +37,7 @@ console.log('\033[36m', `
 
 `);
 
+// Calling the main inquirer function from inquirer_prompts.js; this
+//  function loops through all functions used to run this application.
 ask.selectOptions();
     

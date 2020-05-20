@@ -1,11 +1,19 @@
+// ===============================================================================
+// USE_SQL.JS
+// ===============================================================================
+
+// Importing packages
 var connection = require("./connect_sql");
 var cTable = require("console.table");
 var ask = require("./inquirer_prompts");
 
 
+// Function to print table to the console
 printTable = function(tableType) {
     var queryLine = "";
     
+    // Depending on the type of table called for, 
+    // the sql query is written according to demand
     if(tableType === "completeTable") {
         queryLine = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name, manager.manager_name " +
                     "FROM employee " +
@@ -31,29 +39,19 @@ printTable = function(tableType) {
     }
 
     connection.query(queryLine, function (err, res) {
+       
         if (err) throw err;
 
         const viewTable = cTable.getTable(res);
         console.log(viewTable);
         selectOptions();
-    });
     
+    });   
 }
 
-getSavedChoices = function(columnName, tableName) {
-    var queryLine = "SELECT " + columnName + " FROM " + tableName;
-    connection.query(queryLine, function (err, res) {
-        if (err) throw err;
 
-        // const fullTable = cTable.getTable(res);
-        // console.log(fullTable);
-        return res;
-        
-    });
-};
-
+// Writting new entry to sql tables
 saveNewEntry = function(tableName, newEntryArray) {
-    console.log("Entered saveNewEntry function!");
     var columnNames = [];
     
     if(tableName === "employee") {
@@ -68,27 +66,26 @@ saveNewEntry = function(tableName, newEntryArray) {
     else {
         columnNames = ["manager_name", "department_id"];
     }
-    console.log("columnNames = ", columnNames);
 
     var queryLine = "INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + newEntryArray + ")";
-    console.log("queryLine = ", queryLine);
+
     connection.query(queryLine, function (err, res) {
         if (err) throw err;
         
-        console.log("New Employee saved!");
-
+        console.log(`New ${tableName} saved.`);
         selectOptions();
     })
 };
 
+
+// Erasing entries from sql tables
 deleteEntry = function(tableName, selectedEntry) {
     var queryLine = "DELETE FROM " + tableName + " WHERE id = " + selectedEntry;
     console.log("queryLine = ", queryLine);
     connection.query(queryLine, function (err, res) {
         if (err) throw err;
         
-        console.log("Entry Deleted!");
-
+        console.log(`${tableName} deleted.`);
         selectOptions();
     })
 };
@@ -116,12 +113,9 @@ updateEntry = function(tableName, updatedColumn, updatedValue, selectedEntry) {
     })
 };
 
-testFunction = function(word) {
-    console.log("THIS IS WORKING :)");
-    console.log("var = ", word);
-    selectOptions();
-}
 
+// Once user wants to exit the application, 
+// mySQL connection is closed then program exits.
 exitProgram = function() {
     console.log("Goodbye!");
     connection.end();
@@ -129,11 +123,6 @@ exitProgram = function() {
 
 
 module.exports = {
-    testFunction: testFunction,
     printTable: printTable,
     exitProgram: exitProgram,
-
-
-
-
 };

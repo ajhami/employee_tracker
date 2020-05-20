@@ -1,6 +1,13 @@
+// ===============================================================================
+// INQUIRER_PROMPTS.JS
+// ===============================================================================
+
+// Importing packages
 var accessSQL= require("./use_sql");
 var inquirer = require("inquirer");
 
+
+// Main inquirer function, asking user which action they'd like to execute
 selectOptions = function() {
     
     inquirer.prompt({
@@ -31,7 +38,7 @@ selectOptions = function() {
             "Exit Program"
         ]
 
-    }).then(function(selection) {
+    }).then(function(selection) { // Once a selection is made, route to approprate function
 
         switch (selection.action) {
 
@@ -123,6 +130,8 @@ selectOptions = function() {
 }
 
 
+// Inquirer functions for adding table entries
+
 addNewEmployee = function() {
 
     inquirer.prompt([
@@ -151,7 +160,6 @@ addNewEmployee = function() {
     })
 };
 
-
 addNewDepartment = function() {
     inquirer.prompt({
         type: "input",
@@ -161,7 +169,6 @@ addNewDepartment = function() {
         return saveNewEntry("department", JSON.stringify(newDeparment.name));
     })
 };
-
 
 addNewRole = function() {
     inquirer.prompt([
@@ -202,6 +209,8 @@ addNewManager = function() {
     })
 };
 
+
+// Inquirer function to delete table entries
 selectEntryToDelete = function(type) {
     inquirer.prompt({
         type: "input",
@@ -212,6 +221,8 @@ selectEntryToDelete = function(type) {
     })
 };
 
+
+// Inquirer functions for updating table entries
 updateEmployeeRole = function() {
     inquirer.prompt([
         {
@@ -307,7 +318,8 @@ updateManager = function() {
     })
 };
 
+
+// Exporting main inquirer function
 module.exports = {
-    // addNewEmployee: addNewEmployee,
     selectOptions: selectOptions
 }
